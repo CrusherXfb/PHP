@@ -1,0 +1,24 @@
+User Alice with role 'regular' attempted to log in at 2025-04-02 15:59:35
+User AliceAdmin with role 'admin' attempted to log in at 2025-04-02 15:59:35
+User Alice with role 'regular' logged out at 2025-04-02 15:59:35
+User AliceAdmin with role 'admin' logged out at 2025-04-02 15:59:35
+User Alice with role 'regular' attempted to log in at 2025-04-02 16:04:11
+User AliceAdmin with role 'admin' attempted to log in at 2025-04-02 16:04:11
+User Alice with role 'regular' logged out at 2025-04-02 16:04:11
+User AliceAdmin with role 'admin' logged out at 2025-04-02 16:04:11
+User Alice with role 'regular' attempted to log in at 2025-04-02 16:04:15
+User AliceAdmin with role 'admin' attempted to log in at 2025-04-02 16:04:15
+User Alice with role 'regular' logged out at 2025-04-02 16:04:15
+User AliceAdmin with role 'admin' logged out at 2025-04-02 16:04:15
+User Alice with role 'regular' attempted to log in at 2025-04-02 16:07:46
+User AliceAdmin with role 'admin' attempted to log in at 2025-04-02 16:07:46
+User Alice with role 'regular' logged out at 2025-04-02 16:07:46
+User AliceAdmin with role 'admin' logged out at 2025-04-02 16:07:46
+User Alice with role 'regular' attempted to log in at 2025-04-02 16:08:48
+User AliceAdmin with role 'admin' attempted to log in at 2025-04-02 16:08:48
+User Alice with role 'regular' logged out at 2025-04-02 16:08:48
+User AliceAdmin with role 'admin' logged out at 2025-04-02 16:08:48
+User Alice with role 'regular' attempted to log in at 2025-04-02 16:11:38
+User AliceAdmin with role 'admin' attempted to log in at 2025-04-02 16:11:38
+User Alice with role 'regular' logged out at 2025-04-02 16:11:38
+User AliceAdmin with role 'admin' logged out at 2025-04-02 16:11:38

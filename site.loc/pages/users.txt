@@ -1,3 +1,2 @@
-Alice:12345678;alice@mail.ru
-SecondUser:12345;12345@1234
-Alice2:$2y$10$Eh3r0HSnySzqdL3XZXw3qOGIum64zqIL5mDEnGnEwWvWa47lNyaFC;alice@mail.ru
+Alice:$2y$10$upDHF.run0kMK6qgqG1AVeYRMTjlEsEo/Fu.Y43E4c9yXrm6Z0jwy:alice@mail.ru
+Alice2:$2y$10$MIaMbgH7BF02P9Bu8OLaXe21IKUWJujlgtsR1.ndCkZpkbtvoKT/u:alice2@mail.ru

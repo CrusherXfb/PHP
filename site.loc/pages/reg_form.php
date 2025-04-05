@@ -1,4 +1,4 @@
-<form action="index.php?page=4" method="POST" class="col-md-6 col-lg-6 col-sm-6">
+<form action="index.php?page=5" method="POST" class="col-md-6 col-lg-6 col-sm-6">
     <div class="form-group">
         <label for="login">Input login:</label>
         <input type="text" class="form-control" id="login" name="login">

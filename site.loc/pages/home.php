@@ -14,21 +14,22 @@
 //     echo "Wrong password";
 // }
 
-// "/expression/flags"
-$pattern_phone = "/^\+7 ?\(? ?\d{3} ?\)? ?\d{3}-?\d{2}-?\d{2}$/";
-$pattern_dramatic = "/\.{3}/";
-$pattern_error = "/\b0x\d{2}\b/";
-$pattern_html = "/<\/?[a-z]\d?[a-z]*>/i";
-$pattern_group = "/(go|stop){3}/i";
 
-$string = "gogogo";
-$isMatch = preg_match($pattern_group, $string);
-echo "String: ".$string."</br>Pattern: ".$pattern_group;
-if ($isMatch) {
-    echo "<br> pattern YES <br>";
-} else {
-    echo "<br> pattern NO <br>";
-}
+// "/expression/flags"
+// $pattern_phone = "/^\+7 ?\(? ?\d{3} ?\)? ?\d{3}-?\d{2}-?\d{2}$/";
+// $pattern_dramatic = "/\.{3}/";
+// $pattern_error = "/\b0x\d{2}\b/";
+// $pattern_html = "/<\/?[a-z]\d?[a-z]*>/i";
+// $pattern_group = "/(go|stop){3}/i";
+
+// $string = "gogogo";
+// $isMatch = preg_match($pattern_group, $string);
+// echo "String: ".$string."</br>Pattern: ".$pattern_group;
+// if ($isMatch) {
+//     echo "<br> pattern YES <br>";
+// } else {
+//     echo "<br> pattern NO <br>";
+// }
 
 //hrml
 // <h1> </h1> <div>
