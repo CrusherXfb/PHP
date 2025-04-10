@@ -1,2 +1,3 @@
 Alice:$2y$10$upDHF.run0kMK6qgqG1AVeYRMTjlEsEo/Fu.Y43E4c9yXrm6Z0jwy:alice@mail.ru
 Alice2:$2y$10$MIaMbgH7BF02P9Bu8OLaXe21IKUWJujlgtsR1.ndCkZpkbtvoKT/u:alice2@mail.ru
+Alice-new:$2y$10$prvf8dIwNpJatknqoKeUW.UmviVkGqf7mvNlYzoyhhy8hY6.6bMKG:alice11@mail.ru

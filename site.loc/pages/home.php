@@ -8,10 +8,10 @@
 
 
 
-$patterns = [];
+$patterns = []; //массив паттернов
 $pattern_username = "/^[а-яА-Я]+(-[а-яА-Я]+)*$/u";
 $pattern_hex = "/^#[0-9A-F]{6}$/";
-$pattern_date4 = "/^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).[0-9]{4}$/"; //сокращённый вариант
+$pattern_date4 = "/^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.[0-9]{4}$/"; //сокращённый вариант
 
 $patterns['username'] = $pattern_username;
 $patterns['hex'] = $pattern_hex;
@@ -19,10 +19,10 @@ $patterns['date'] = $pattern_date4;
 
 $pattern;
 $string;
-foreach ($patterns as $key => $value) {
+foreach ($patterns as $key => $value) { 
     switch ($key) {
         case 'username':
-            $string = "Ортега-и-Гассет";
+            $string = "Ортега-и-Гассет"; //строка для проверки
             //Анна-Мария, Ван-дер-Ваальс, Ортега-и-Гассет 
             //Санта-, Мария--Антуанетта
             break;
@@ -33,20 +33,18 @@ foreach ($patterns as $key => $value) {
             $string = "#AA00AA";
             break;
     }
-    $pattern = $value;
+    $pattern = $value; //подключение паттерна
     echo "Pattern $key:<br><div class='container'>";
     $isMatch = preg_match($pattern, $string);
     echo "String: " . $string . "</br>Pattern: " . $pattern;
     if ($isMatch) {
         echo ($key == "hex" ? "<br><h4 style='color:$string'>pattern YES </h4><br>" : "<br> pattern YES <br>");
-        
+        //если паттерн hex, то при прохождении регулярного выражения текст выведется получившимся цветом
     } else {
         echo "<br> pattern NO <br>";
     }
     echo "</div><br>";
 }
-
-
 
 
 

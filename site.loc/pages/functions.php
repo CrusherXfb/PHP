@@ -79,6 +79,10 @@ function loginUser(string $name, string $pass)
 function validate(string $name, string $email, string $pass, string $pass_confirm)
 {
     $errors = [];
+
+    $pattern_email = "/^[a-zA-Z][a-zA-Z0-9]*(.[a-zA-Z][a-zA-Z0-9]*)*@([a-zA-Z]+.[a-zA-Z]{2,3})$/";
+    $pattern_name = "/^([а-яА-Я]+(-[а-яА-Я]+)*|[a-zA-Z]+(-[a-zA-Z]+)*)$/u"; //либо кириллица, либо латиница, не вперемешку
+    $pattern_password = "/^(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9!@$#-]+$/";
     function len(string $str)
     {
         return mb_strlen($str, "UTF-8");
@@ -88,8 +92,20 @@ function validate(string $name, string $email, string $pass, string $pass_confir
         $errors[] = "Все поля должны быть заполнены";
     }
 
+    if (!preg_match($pattern_name, $name)) {
+        $errors[] = "Неверный формат логина";
+    }
+
+    if (!preg_match($pattern_email, $email)) {
+        $errors[] = "Неверный формат email";
+    }
+
     if ($pass !== $pass_confirm) {
         $errors[] = "Пароли не совпадают";
+    }
+
+    if (!preg_match($pattern_password, $pass)) {
+        $errors[] = "Неверный формат пароля (латиница, цифры и символы, минимум 1 заглавная и 1 цифра)";
     }
 
     if (len($name) < 3 || len($name) > 15) {
