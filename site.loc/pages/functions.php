@@ -123,20 +123,15 @@ function validate(string $name, string $email, string $pass, string $pass_confir
 
 function uploadFile($filename)
 {
-    echo $_FILES[$filename]['error'];
-    if ($_FILES[$filename]['error'] != 0) {
-        echo "<h4 style='color:red'>Ошибка при загрузке файла: " . $_FILES[$filename]['error'] . "</h4>";
-        exit();
-    }
+    $errors = []; 
     if (is_uploaded_file($_FILES[$filename]['tmp_name'])) {
-        if (move_uploaded_file($_FILES[$filename]['tmp_name'], 'images/' . $_FILES[$filename]['name'])) {
-            echo "<h4 style='color:green'>Файл успешно загружен!</h4>";
-        } else {
-            echo "<h4 style='color:red'>Не удалось сохранить файл!</h4>";
+        if (!move_uploaded_file($_FILES[$filename]['tmp_name'], 'images/' . $_FILES[$filename]['name'])) {
+            $errors[] = "Ошибка при сохранении файла"; //можно воспроизвести если изменить папку назначения
         }
     } else {
-        echo "<h4 style='color:red'>Не удалось сохранить файл!</h4>";
+        $errors[] = "Ошибка при загрузке файла"; //можно воспроизвести если установить минимальный максимум размера файла
     }
+    return $errors;
 }
 
 ?>

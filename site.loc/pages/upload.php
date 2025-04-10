@@ -5,26 +5,34 @@
 допустите при его указании синтаксическую ошибку,
 PHP не скажет вам об этом. Но upload выполняться не будет        
  -->
- 
+
 <?php
-if (!isset($_POST['uploadbtn'])) {
-    ?>
+$errors = [];
 
-    <form action="index.php?page=2" method="POST" enctype='multipart/form-data'>
-        <div class="form-group">
-            <label for="image">Выберите файл для загрузки</label>
-            <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
-            <input type="file" id="image" name="image" accept="image/*">
-        </div>
-        <button type="submit" class="btn btn-primary" name="uploadbtn">Загрузить</button>
-    </form>
-
-    <?php 
-}
-else {
-    uploadFile("image");
+if (isset($_POST['uploadbtn'])) {
+    $errors = uploadFile("image");
 }
 
+?>
+
+<form action="index.php?page=2" method="POST" enctype='multipart/form-data'>
+    <div class="form-group">
+        <label for="image">Выберите файл для загрузки</label>
+        <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
+        <input type="file" id="image" name="image" accept="image/*">
+    </div>
+    <button type="submit" class="btn btn-primary" name="uploadbtn">Загрузить</button>
+</form>
+
+<?php if (!empty($errors)): ?>
+    <?php foreach ($errors as $error): ?>
+        <h4 style='color:red'><?php echo htmlspecialchars($error); ?></h4>
+    <?php endforeach; ?>
+<?php else: ?>
+    <?php if (isset($_POST['uploadbtn'])): ?>
+        <h4 style='color:green'>Файл успешно загружен!</h4>
+    <?php endif; ?>
+<?php endif; 
 
 
 
