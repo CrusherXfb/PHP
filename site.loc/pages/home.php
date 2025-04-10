@@ -1,6 +1,61 @@
 <h2>This is Home</h2>
 <?php
 
+// $pattern_date1 = "/^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).d{4}$/"; //не работает
+// $pattern_date2 = "/^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).dddd$/"; //не работает
+// $pattern_date3 = "/^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).[0-9][0-9][0-9][0-9]$/"; //работает
+// $pattern_date4 = "/^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).[0-9]{4}$/"; //сокращённый вариант
+
+
+
+$patterns = [];
+$pattern_username = "/^[а-яА-Я]+(-[а-яА-Я]+)*$/u";
+$pattern_hex = "/^#[0-9A-F]{6}$/";
+$pattern_date4 = "/^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).[0-9]{4}$/"; //сокращённый вариант
+
+$patterns['username'] = $pattern_username;
+$patterns['hex'] = $pattern_hex;
+$patterns['date'] = $pattern_date4;
+
+$pattern;
+$string;
+foreach ($patterns as $key => $value) {
+    switch ($key) {
+        case 'username':
+            $string = "Ортега-и-Гассет";
+            //Анна-Мария, Ван-дер-Ваальс, Ортега-и-Гассет 
+            //Санта-, Мария--Антуанетта
+            break;
+        case "date":
+            $string = "01.12.2012";
+            break;
+        case "hex":
+            $string = "#AA00AA";
+            break;
+    }
+    $pattern = $value;
+    echo "Pattern $key:<br><div class='container'>";
+    $isMatch = preg_match($pattern, $string);
+    echo "String: " . $string . "</br>Pattern: " . $pattern;
+    if ($isMatch) {
+        echo ($key == "hex" ? "<br><h4 style='color:$string'>pattern YES </h4><br>" : "<br> pattern YES <br>");
+        
+    } else {
+        echo "<br> pattern NO <br>";
+    }
+    echo "</div><br>";
+}
+
+
+
+
+
+
+
+
+
+
+
 // $pass = "12345";
 // $pass2 = "Alice";
 // $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
@@ -22,9 +77,12 @@
 // $pattern_html = "/<\/?[a-z]\d?[a-z]*>/i";
 // $pattern_group = "/(go|stop){3}/i";
 
-// $string = "gogogo";
-// $isMatch = preg_match($pattern_group, $string);
-// echo "String: ".$string."</br>Pattern: ".$pattern_group;
+// 
+
+
+
+// $isMatch = preg_match($pattern_hex, $string);
+// echo "String: ".$string."</br>Pattern: ".$pattern_hex;
 // if ($isMatch) {
 //     echo "<br> pattern YES <br>";
 // } else {
@@ -52,7 +110,7 @@
 // ^ -> начало строки
 // $ -> строки
 // / [ ] \ ^ $ . | ? * + ( ) { } <- символы, которые нужно писать через \
- 
+
 // квантификаторы
 // {n} -> n раз подряд
 // {i,k} -> от i до k раз подряд
