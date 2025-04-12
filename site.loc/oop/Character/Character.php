@@ -1,13 +1,12 @@
 <?php
-require_once(__DIR__."\Loggable.php");
-require_once(__DIR__."\Interactable.php");
+require_once(__DIR__."\Loggable.php"); //для трейта
 
 class Character {
     use Loggable;    
     
-    private $name;
-    private $age;
-    private $description;
+    protected $name;
+    protected $age;
+    protected $description;
     private static int $characterCount = 0;
     public static function getCharacterCount() {
         return self::$characterCount;
@@ -23,5 +22,9 @@ class Character {
 
     function introduce() {
         echo "Меня зовут {$this->name}, мне {$this->age} лет. {$this->description} <br>";
+    }
+
+    function getName() {
+        return $this->name;
     }
 }

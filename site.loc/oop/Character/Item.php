@@ -17,8 +17,12 @@ class Item implements Interactable
 
     function interact()
     {
-        $this->log("Игрок взаимодействует с предметом: {$this->itemName}");
+        $this->log(message: "Игрок взаимодействует с предметом: {$this->itemName}");
         echo "Вы взаимодействуете с предметом: {$this->itemName}. {$this->itemDescription} <br>";
+    }
+
+    function getName() {
+        return $this->itemName;
     }
 }
 
