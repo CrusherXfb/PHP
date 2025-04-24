@@ -17,3 +17,6 @@ define('CONTROLLERS', APP . '/controllers');
 define('ERRORS', VIEWS."/errors");
 define ('CONFIG', ROOT.'/config');
 define ('CLASSES', CORE.'/classes');
+
+define ('POSTS_CONTROLLER', CONTROLLERS.'/posts');
+define ('POSTS_VIEWS', VIEWS.'/posts');

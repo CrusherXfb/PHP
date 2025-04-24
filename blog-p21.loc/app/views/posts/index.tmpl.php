@@ -1,9 +1,9 @@
-<? require_once (COMPONENTS."/header.php"); ?>
+<? require_once(COMPONENTS . "/header.php"); ?>
 
 <main class="main py-3">
     <div class="container">
         <div class="row">
-        <? require_once COMPONENTS."/sidebar.php"; ?>
+            <? require_once COMPONENTS . "/sidebar.php"; ?>
 
             <div class="col-10">
                 <h3><?= $header ?? "" ?></h3>
@@ -15,7 +15,8 @@
                                     </div> -->
                             <div class="col-md-12">
                                 <div class="card-body">
-                                    <h5 class="card-title"><a href="post?id=<?= $post['post_id'] ?>"><?= $post['title'] ?></a>
+                                    <h5 class="card-title"><a
+                                            href="posts?id=<?= $post['post_id'] ?>"><?= $post['title'] ?></a>
                                     </h5>
                                     <p class="card-text"><?= $post['excerpt'] ?>
                                     </p>
@@ -27,10 +28,11 @@
                     </div>
 
                 <?php endforeach ?>
+                <?= $pagination ?>
 
             </div>
         </div>
     </div>
 </main>
 
-<? require_once COMPONENTS."/footer.php"; ?>
+<? require_once COMPONENTS . "/footer.php"; ?>

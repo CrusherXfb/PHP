@@ -1,21 +1,64 @@
 <?php
+session_start();
+
+
 require_once(dirname(__DIR__) . '/config/config.php');
-
 require_once(CORE . '/functions.php');
-
 require_once(CLASSES . '/DB.php');
+require_once(CLASSES . '/Router.php');
+
 $db_config = require_once CONFIG . '/db.php';
-$db = new DB($db_config);
+$db = DB::getInstance()->getConnection($db_config);
 
-require_once(CORE . '/router.php');
-
-
-
-
+$router = new Router();
+require_once (CONFIG .'/routes.php'); //теперь здесь будут маршруты в формате $router->маршрут
+$router->match();
 
 
 
 
+
+
+
+
+
+
+//$data = range(1, 212); //выборка элементов
+
+//dump($data);
+
+// $per_page = 10; //элементов на странице
+// $total = count($data); //всего элементов
+
+// $pages_count = ceil($total / $per_page); //всего страниц
+
+// $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1; //запрос страницы
+
+
+
+// if ($current_page < 1) {
+//     $current_page = 1;
+// } else if ($current_page > $pages_count) {
+//     $current_page = $pages_count;
+// }
+
+// $start_elem = ($current_page - 1) * $per_page;
+
+
+// dump([
+//     "total: $total",
+//     "per page: $per_page",
+//     "pages count: $pages_count",
+//     "current page: $current_page",
+//     "starting elem: $start_elem",
+// ]);
+
+// //выборка
+// dump (array_slice($data, $start_elem, $per_page));
+
+// for ($i = 1; $i <= $pages_count; $i++) {
+//     echo "<a href='?page={$i}'> {$i} </a>";
+// }
 
 
 
@@ -90,4 +133,3 @@ require_once(CORE . '/router.php');
 // dump($result);
 
 
-?>
