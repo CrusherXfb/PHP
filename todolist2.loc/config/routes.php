@@ -24,4 +24,8 @@ $router->get('tasks/create', 'tasks/create.php'); // Форма создания
 $router->post('tasks/create', 'tasks/store.php'); // Сохранение новой задачи
 $router->get('tasks', 'tasks/show.php'); // Отображение задачи
 $router->delete('tasks', 'tasks/destroy.php'); // Удаление задачи
+$router->get('tasks/update', 'tasks/update.php'); // Форма редактирования задачи
+$router->post('tasks/update', 'tasks/update.php'); // Редактирование задачи
+$router->put('tasks/update', 'tasks/update.php'); // Редактирование задачи
+
 

@@ -3,9 +3,9 @@
 global $db;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = trim($_POST['username']);
+    $username = h($_POST['username']);
     $password = $_POST['password'];
-    $email = trim($_POST['email']);
+    $email = h($_POST['email']);
 
     if (empty($username) || empty($password) || empty($email)) {
         $_SESSION['error'] = "Все поля обязательны для заполнения";
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     $sql = "INSERT INTO users (username, password, email) VALUES (:username, :password, :email)";
     $db->query($sql, [

@@ -4,7 +4,7 @@ global $db;
 require_once(CLASSES . "/Validator.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $fillable = ['title', 'priority'];
+    $fillable = ['title', 'description', 'priority', 'due_date', 'hashtag', 'comment'];
 
     $data = loadPOSTData($fillable);
 
@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (!$validationResult->hasErrors()) {
+        
         $file_ = '';
         $user_id = $_SESSION['user_id'];
         $sql = "INSERT INTO tasks (title, description, priority, due_date, hashtag, comment, file_, user_id)
