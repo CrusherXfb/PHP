@@ -4,21 +4,20 @@ class Validator
 {
     protected $errors = [];
 
-    protected $validatorList = ['required', 'min', 'max', 'email', 'match'];
+    protected $validatorList = ['required', 'min', 'max', 'email', 'match', 'in'];
     protected $data_items;
 
     protected $messages = [
-        'required' => 'The :fieldname: field is required',
-        'min' => 'The :fieldname: field must be at least :rulevalue: characters',
-        'max' => 'The :fieldname: field must be a maximum :rulevalue: characters',
-        'email' => 'The :fieldname: must me an email',
-        'match' => 'The :fieldname: must matched with :rulevalue: field',
+        'required' => 'Поле :fieldname: обязательно для заполнения',
+        'min' => 'Поле :fieldname: должно содержать не менее :rulevalue: символов',
+        'max' => 'Поле :fieldname: должно содержать не более :rulevalue: символов',
+        'email' => 'Поле :fieldname: должно быть электронной почтой',
+        'match' => 'Поле :fieldname: должно совпадать с полем :rulevalue:',
+        'in' => 'Поле :fieldname: должно быть одним из следующих значений: :rulevalue:',
     ];
 
     public function validate($data = [], $rules = [])
     {
-        // dump($data);
-        // dd($rules);
         $this->data_items = $data;
         foreach ($data as $fieldname => $value) {
             if (in_array($fieldname, array_keys($rules))) {
@@ -102,7 +101,19 @@ class Validator
     protected function match($value, $ruleValue) {
         return $value === $this->data_items[$ruleValue];
     }
+
+    protected function in($value, $ruleValue) {
+        $allowedValues = explode(',', $ruleValue);
+        return in_array($value, $allowedValues);
+    }
+
+    public function getErrors() {
+        return $this->errors;
+    }
 }
+
+    
+
 
 
 

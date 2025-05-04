@@ -1,40 +1,124 @@
 <?php
 global $db;
 
-$id = (int) $_GET['id'] ?? 0;
-$sql = "SELECT * FROM tasks WHERE id = ?";
-$task = $db->query($sql, [$id])->findOrAbort();
+require_once APP . '/helpers/hashtag_helpers.php';
+require_once CLASSES . "/Validator.php";
 
+$id = (int) ($_GET['id'] ?? 0);
 
-// Обработка обновления задачи
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = $_POST['title'] ?? '';
-    $description = $_POST['description'] ?? '';
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    
+    $sql = "SELECT * FROM tasks WHERE id = :id AND user_id = :user_id";
+    $task = $db->query($sql, ['id' => $id, 'user_id' => $_SESSION['user_id']])->findOrAbort();
+
+    $hashtags = getTaskHashtags($db, $id);
+    $hashtags_string = implode(', ', array_map(function ($tag) {
+        return $tag['name'];
+    }, $hashtags));
+
+    $title = "Редактирование задачи";
+    require_once VIEWS . "/tasks/update.tmpl.php";
+} 
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+    $title = trim($_POST['title'] ?? '');
+    $description = trim($_POST['description'] ?? '');
     $priority = $_POST['priority'] ?? 'high';
-    $due_date = $_POST['due_date'] ?? null;
-    $hashtag = $_POST['hashtag'] ?? '';
-    $comment = $_POST['comment'] ?? '';
+    $due_date = !empty($_POST['due_date']) ? date('Y-m-d H:i:s', strtotime($_POST['due_date'])) : null;
+    $hashtags = trim($_POST['hashtags'] ?? '');
+    $comment = trim($_POST['comment'] ?? '');
 
-    // Обработка файла
-    // if (isset($_FILES['file_']) && $_FILES['file_']['error'] === UPLOAD_ERR_OK) {
-    //     // Обработка загрузки файла
-    // }
+    $data = [
+        'title' => $title,
+        'description' => $description,
+        'priority' => $priority,
+        'due_date' => $due_date,
+        'hashtags' => $hashtags,
+        'comment' => $comment
+    ];
 
-    // Обновление задачи в базе данных
-    $updateSql = "UPDATE tasks SET title = ?, description = ?, priority = ?, due_date = ?, hashtag = ?, comment = ? WHERE id = ?";
+    $rules = [
+        'title' => ['required', 'min' => 3, 'max' => 255],
+        'priority' => ['required', 'in' => 'high,medium,low']
+    ];
 
+    $validator = new Validator();
+    $validationResult = $validator->validate($data, $rules);
 
-    if (
-        $db->query($updateSql, [$title, $description, $priority, $due_date, $hashtag, $comment, $id])
-    ) {
-        $_SESSION['success'] = "Данные о задании обновлены";
-    } else {
-        $_SESSION['error'] = "Ошибка БД";
+    if ($validationResult->hasErrors()) {
+        // Сохраняем данные формы и ошибки для отображения
+        $_SESSION['old'] = $_POST;
+        $_SESSION['validation_errors'] = $validationResult->getErrors();
+        
+        $task = [
+            'id' => $id,
+            'title' => $title,
+            'description' => $description,
+            'priority' => $priority,
+            'due_date' => $due_date,
+            'comment' => $comment
+        ];
+        
+        // Передаем хэштеги для отображения
+        $hashtags_string = $hashtags;
+        
+        $title = "Редактирование задачи";
+        require_once VIEWS . "/tasks/update.tmpl.php";
+        return;
     }
 
-    // Перенаправление после успешного обновления
-    redirect("../tasks/index");
-}
+    $file_path = null;
 
-require VIEWS . '/tasks/update.tmpl.php';
-?>
+    $sql = "SELECT file_ FROM tasks WHERE id = :id AND user_id = :user_id";
+    $currentTask = $db->query($sql, ['id' => $id, 'user_id' => $_SESSION['user_id']])->find();
+
+    if ($file_path === null && isset($currentTask['file_'])) {
+        $file_path = $currentTask['file_'];
+    }
+
+    try {
+        $sql = "UPDATE tasks SET 
+                title = :title, 
+                description = :description, 
+                priority = :priority, 
+                due_date = :due_date, 
+                comment = :comment, 
+                file_ = :file_,
+                updated_at = :updated_at
+                WHERE id = :id AND user_id = :user_id";
+
+        $params = [
+            'title' => $title,
+            'description' => $description,
+            'priority' => $priority,
+            'due_date' => $due_date,
+            'comment' => $comment,
+            'file_' => $file_path,
+            'updated_at' => date('Y-m-d H:i:s'),
+            'id' => $id,
+            'user_id' => $_SESSION['user_id']
+        ];
+
+        $result = $db->query($sql, $params);
+
+        if ($result) {
+            // Удаляем старые хэштеги
+            $sql = "DELETE FROM task_hashtags WHERE task_id = :task_id";
+            $db->query($sql, ['task_id' => $id]);
+
+            // Добавляем новые хэштеги
+            if (!empty($hashtags)) {
+                processHashtags($db, $id, $hashtags);
+            }
+
+            $_SESSION['success'] = "Задача успешно обновлена";
+        } else {
+            throw new Exception("Failed to update task");
+        }
+
+        redirect("../tasks/index");
+    } catch (Exception $e) {
+        $_SESSION['error'] = "Ошибка при обновлении задачи: " . $e->getMessage();
+        redirect("tasks/update?id={$id}");
+    }
+}

@@ -1,9 +1,13 @@
 <?php
 
-
 global $db;
 
-$sql = "SELECT * FROM tasks WHERE user_id = ?";
+// Проверка на авторизацию
+if (!isset($_SESSION['user_id'])) { 
+    redirect('login');
+}
+
+$sql = "SELECT * FROM tasks WHERE user_id = ?"; //запрос всех задач пользователя
 $tasks = $db->query($sql, [$_SESSION['user_id']])->findAll();
 
 

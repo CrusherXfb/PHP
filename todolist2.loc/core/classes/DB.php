@@ -71,5 +71,9 @@ class DB
     public function getColumn() {
         return $this->stmt->fetchColumn();
     }
+
+    public function error() {
+        return $this->conn->errorInfo();
+    }
 }
 

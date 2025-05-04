@@ -33,7 +33,14 @@ function loadPostData(array $fillable)
 //подставляет прошлое значение в форму
 function old($fieldname)
 {
-    return isset($_POST[$fieldname]) ? h($_POST[$fieldname]) : '';
+    if (isset($_POST[$fieldname])) {
+        return h($_POST[$fieldname]);
+    } elseif (isset($_SESSION['old'][$fieldname])) {
+        $value = $_SESSION['old'][$fieldname];
+        return h($value);
+    } else {
+        return '';
+    }
 }
 
 function h($str)

@@ -2,12 +2,12 @@
 
 global $db;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") { //если форма отправлена
     $username = h($_POST['username']);
-    $password = $_POST['password'];
+    $password = h($_POST['password']);
     $email = h($_POST['email']);
 
-    if (empty($username) || empty($password) || empty($email)) {
+    if (empty($username) || empty($password) || empty($email)) { //если поля пустые
         $_SESSION['error'] = "Все поля обязательны для заполнения";
         redirect("register");
         exit();
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $sql = "SELECT * FROM users WHERE username = :username OR email = :email";
     $db->query($sql, ['username' => $username, 'email' => $email]);
-    if ($db->find()) {
+    if ($db->find()) { //если имя пользователя или email заняты
         $_SESSION['error'] = "Имя пользователя или электронная почта уже заняты";
         redirect("register");
         exit();
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     $sql = "INSERT INTO users (username, password, email) VALUES (:username, :password, :email)";
-    $db->query($sql, [
+    $db->query($sql, [ //создание нового пользователя
         'username' => $username,
         'password' => $hashedPassword,
         'email' => $email
@@ -35,5 +35,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit();
 } else {
     require_once VIEWS . '/auth/register.tmpl.php';
-    die;
 }

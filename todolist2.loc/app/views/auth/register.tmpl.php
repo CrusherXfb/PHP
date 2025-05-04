@@ -13,7 +13,7 @@ require_once VIEWS . '/components/header.php';
         <form method="post" action="register">
             <div class="form-group">
                 <label for="username">Имя пользователя:</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+                <input type="text" class="form-control" id="username" name="username" value="<?= old(fieldname: 'username') ?>" required>
             </div>
             <div class="form-group">
                 <label for="password">Пароль:</label>
@@ -21,7 +21,7 @@ require_once VIEWS . '/components/header.php';
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email" value="<?= old(fieldname: 'email') ?>" required>
             </div>
             <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
         </form>

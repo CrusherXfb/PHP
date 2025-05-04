@@ -1,16 +1,16 @@
 <?php require_once(COMPONENTS . "/header.php");
 require_once APP . '/helpers/hashtag_helpers.php'; ?>
-
 <main class="main py-3">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1>Мои задачи</h1>
-                    <a href="tasks/create" class="btn btn-primary">Создать задачу</a>
+                    <h1>Результаты поиска</h1>
+                    <a href="tasks" class="btn btn-secondary">Назад к задачам</a>
                 </div>
+
                 <?php if (empty($tasks)): ?>
-                    <div class="alert alert-info">У вас пока нет задач. Создайте новую задачу, чтобы начать.</div>
+                    <div class="alert alert-info">По вашему запросу ничего не найдено.</div>
                 <?php else: ?>
                     <div class="row">
                         <?php foreach ($tasks as $task): ?>
@@ -69,6 +69,4 @@ require_once APP . '/helpers/hashtag_helpers.php'; ?>
         </div>
     </div>
 </main>
-
-
 <?php require_once(COMPONENTS . "/footer.php"); ?>

@@ -2,7 +2,7 @@
 
 global $db;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") { //если форма отправлена
     $username = trim($_POST['username']);
     $password = $_POST['password'];
 
@@ -10,11 +10,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db->query($sql, ['username' => $username]);
     $user = $db->find();
 
-    if ($user && password_verify($password, $user['password'])) {
+    if ($user && password_verify($password, $user['password'])) { //успешный вход
         $_SESSION['user_id'] = $user['id'];
         redirect('/');
         exit();
-    } else {
+    } else { 
         $_SESSION['error'] = "Неверное имя пользователя или пароль";
         redirect("login");
         exit();

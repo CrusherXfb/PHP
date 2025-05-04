@@ -30,7 +30,16 @@
                                 <a class="nav-link" href="tasks/create">Новая задача</a>
                             <?php endif; ?>
                         </div>
-                        <ul class="navbar-nav ml-auto">
+
+                        <?php if (isset($_SESSION['user_id'])): ?>
+                            <form class="d-flex mx-auto" role="search" action="tasks/search" method="GET">
+                                <input class="form-control me-2" type="search" name="query" placeholder="Поиск задач"
+                                    aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit">Поиск</button>
+                            </form>
+                        <?php endif; ?>
+
+                        <ul class="navbar-nav ms-auto">
                             <?php if (isset($_SESSION['user_id'])): ?>
                                 <li class="nav-item"><a class="nav-link" href="logout">Выйти</a></li>
                             <?php else: ?>
@@ -39,7 +48,6 @@
                             <?php endif; ?>
                         </ul>
                     </div>
-
                 </div>
             </nav>
         </header>

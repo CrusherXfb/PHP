@@ -1,10 +1,4 @@
 <?php
-//POSTS
- //все посты
-// $router->get('posts', 'posts/show.php'); //отобразить пост
-// $router->delete('posts', 'posts/destroy.php'); //удалить пост
-// $router->put('posts/rating', 'posts/update-rating.php'); 
-
 // карта маршрутов
 
 //PAGES
@@ -26,6 +20,4 @@ $router->get('tasks', 'tasks/show.php'); // Отображение задачи
 $router->delete('tasks', 'tasks/destroy.php'); // Удаление задачи
 $router->get('tasks/update', 'tasks/update.php'); // Форма редактирования задачи
 $router->post('tasks/update', 'tasks/update.php'); // Редактирование задачи
-$router->put('tasks/update', 'tasks/update.php'); // Редактирование задачи
-
-
+$router->get('tasks/search', 'tasks/search.php'); // Search tasks
