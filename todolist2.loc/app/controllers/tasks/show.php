@@ -2,6 +2,9 @@
 //отображение задачи
 global $db;
 
+if (!isset($_SESSION['user_id'])) {
+    redirect('/login');
+}
 // Подключение функций для работы с хэштегами и задачами
 require_once CORE . '/hashtag_helpers.php';
 require_once CORE . '/task_helpers.php';

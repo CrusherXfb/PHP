@@ -2,6 +2,10 @@
 //скачивание файла
 global $db;
 
+if (!isset($_SESSION['user_id'])) {
+    redirect('/login');
+}
+
 $id = (int)($_GET['id'] ?? 0);
 
 $sql = "SELECT file_ FROM tasks WHERE id = :id AND user_id = :user_id";

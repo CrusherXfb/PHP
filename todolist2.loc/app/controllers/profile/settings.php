@@ -10,15 +10,15 @@ if (!isset($_SESSION['user_id'])) {
 $userId = $_SESSION['user_id'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $currentPassword = $_POST['current_password'] ?? '';
-    $newPassword = $_POST['new_password'] ?? '';
-    $confirmPassword = $_POST['confirm_password'] ?? '';
+    $currentPassword = h($_POST['current_password']) ?? '';
+    $newPassword = h($_POST['new_password']) ?? '';
+    $confirmPassword = h($_POST['confirm_password']) ?? '';
     
     $validator = new Validator();
     
     $rules = [
         'current_password' => ['required' => true],
-        'new_password' => ['required' => true, 'min' => 6],
+        'new_password' => ['required' => true, 'min' => 6, 'no_spaces' => true],
         'confirm_password' => ['required' => true, 'match' => 'new_password']
     ];
     

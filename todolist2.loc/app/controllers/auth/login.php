@@ -3,8 +3,8 @@
 global $db;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") { //если форма отправлена
-    $username = trim($_POST['username']);
-    $password = $_POST['password'];
+    $username = h(trim($_POST['username']));
+    $password = h($_POST['password']);
 
     $sql = "SELECT * FROM users WHERE username = :username";
     $db->query($sql, ['username' => $username]);

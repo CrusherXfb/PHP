@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //если форма отправл
     $rules = [
         'username' => ['required' => true, 'min' => 3, 'max' => 30, 'no_spaces' => true],
         'password' => ['required' => true, 'min' => 6, 'max' => 50],
-        'confirm_password' => ['required' => true, 'match' => 'password'],
+        'confirm_password' => ['required' => true, 'match' => 'password', 'no_spaces' => true],
         'email' => ['required' => true, 'email' => true]
     ];
     

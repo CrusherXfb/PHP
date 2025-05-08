@@ -12,14 +12,14 @@ require_once CORE . '/hashtag_helpers.php';
 require_once CORE . '/task_helpers.php';
 
 // Получаем параметр фильтра из GET запроса 
-$filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
+$filter = isset($_GET['filter']) ? h($_GET['filter']) : 'all';
 
 // Получаем параметр вида отображения из GET запроса 
-$view = isset($_GET['view']) ? $_GET['view'] : 'grid';
+$view = isset($_GET['view']) ? h($_GET['view']) : 'grid';
 
 // Сохраняем параметр вида отображения в сессии
 if (isset($_GET['view'])) {
-    $_SESSION['preferred_view'] = $_GET['view'];
+    $_SESSION['preferred_view'] = h($_GET['view']);
 } elseif (isset($_SESSION['preferred_view'])) {
     $view = $_SESSION['preferred_view'];
 }

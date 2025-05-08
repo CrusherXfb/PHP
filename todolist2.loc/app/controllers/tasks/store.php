@@ -1,15 +1,20 @@
 <?php
 //сохранение задачи
 global $db;
+
+if (!isset($_SESSION['user_id'])) {
+    redirect('/login');
+}
+
 require_once(CLASSES . "/Validator.php");
 require_once CORE . '/hashtag_helpers.php';
 
-$title = trim($_POST['title'] ?? '');
-$description = trim($_POST['description'] ?? '');
-$priority = $_POST['priority'] ?? 'high';
+$title = h(trim($_POST['title'] ?? ''));
+$description = h(trim($_POST['description'] ?? ''));
+$priority = h($_POST['priority'] ?? 'high');
 $due_date = !empty($_POST['due_date']) ? date('Y-m-d H:i:s', strtotime($_POST['due_date'])) : null;
-$hashtags = trim($_POST['hashtags'] ?? '');
-$comment = trim($_POST['comment'] ?? '');
+$hashtags = h(trim($_POST['hashtags'] ?? ''));
+$comment = h(trim($_POST['comment'] ?? ''));
 
 $data = [
     'title' => $title,

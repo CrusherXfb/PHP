@@ -111,9 +111,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Удаление подзадачи
     document.querySelectorAll('.delete-subtask').forEach(button => {
         button.addEventListener('click', function() {
-            if (!confirm('Вы уверены, что хотите удалить эту подзадачу?')) {
-                return;
-            }
             
             const subtaskId = this.dataset.id;
             
