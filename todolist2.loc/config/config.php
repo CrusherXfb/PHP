@@ -18,4 +18,4 @@ define ('CLASSES', CORE.'/classes');
 
 define('TASKS_VIEWS', VIEWS . '/tasks');
 
-define ('UPLOADS', ROOT.'/uploads');
+define ('STORAGE', ROOT.'/storage');

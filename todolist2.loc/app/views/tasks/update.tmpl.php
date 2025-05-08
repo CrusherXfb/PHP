@@ -107,4 +107,3 @@ unset($_SESSION['validation_errors']);
 unset($_SESSION['old']);
 ?>
 <?php require_once(COMPONENTS . "/footer.php"); ?>
-<?php require_once(COMPONENTS . "/footer.php"); ?>

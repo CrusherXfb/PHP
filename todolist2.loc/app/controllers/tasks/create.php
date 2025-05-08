@@ -1,8 +1,8 @@
 <?php
+//форма создания задачи
 
-// Проверка на авторизацию
 if (!isset($_SESSION['user_id'])) {
-    redirect('login');
+    redirect('/login');
 }
 
 $title = "Создание новой задачи";

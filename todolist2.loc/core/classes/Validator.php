@@ -4,7 +4,7 @@ class Validator
 {
     protected $errors = [];
 
-    protected $validatorList = ['required', 'min', 'max', 'email', 'match', 'in'];
+    protected $validatorList = ['required', 'min', 'max', 'email', 'match', 'in', 'no_spaces'];
     protected $data_items;
 
     protected $messages = [
@@ -14,6 +14,7 @@ class Validator
         'email' => 'Поле :fieldname: должно быть электронной почтой',
         'match' => 'Поле :fieldname: должно совпадать с полем :rulevalue:',
         'in' => 'Поле :fieldname: должно быть одним из следующих значений: :rulevalue:',
+        'no_spaces' => 'Поле :fieldname: не должно содержать пробелы',
     ];
 
     public function validate($data = [], $rules = [])
@@ -105,6 +106,10 @@ class Validator
     protected function in($value, $ruleValue) {
         $allowedValues = explode(',', $ruleValue);
         return in_array($value, $allowedValues);
+    }
+
+    protected function no_spaces($value, $ruleValue) {
+        return strpos($value, ' ') === false;
     }
 
     public function getErrors() {

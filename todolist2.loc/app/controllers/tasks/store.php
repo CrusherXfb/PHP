@@ -1,8 +1,8 @@
 <?php
-
+//сохранение задачи
 global $db;
 require_once(CLASSES . "/Validator.php");
-require_once APP . '/helpers/hashtag_helpers.php';
+require_once CORE . '/hashtag_helpers.php';
 
 $title = trim($_POST['title'] ?? '');
 $description = trim($_POST['description'] ?? '');
@@ -46,6 +46,33 @@ if ($validationResult->hasErrors()) {
 }
 
 $file_path = null;
+
+// Загрузка файла
+if (isset($_FILES['file_']) && $_FILES['file_']['error'] === UPLOAD_ERR_OK) {
+    $upload_dir = STORAGE . '/uploads/';
+
+    // Создаем директорию, если она не существует
+    if (!file_exists($upload_dir)) {
+        mkdir($upload_dir, 0777, true);
+    }
+
+    $file_name = $_FILES['file_']['name'];
+    $file_tmp = $_FILES['file_']['tmp_name'];
+    $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+
+    // Генерируем уникальное имя файла
+    $unique_file_name = uniqid() . '_' . $file_name;
+    $upload_path = $upload_dir . $unique_file_name;
+
+    // Перемещаем загруженный файл в указанную директорию
+    if (move_uploaded_file($file_tmp, $upload_path)) {
+        $file_path = 'storage/uploads/' . $unique_file_name;
+    } else {
+        $_SESSION['error'] = "Ошибка при загрузке файла";
+        redirect("../tasks/create");
+        return;
+    }
+}
 
 try {
     $sql = "INSERT INTO tasks (title, description, priority, due_date, comment, file_, user_id) 

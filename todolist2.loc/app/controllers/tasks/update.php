@@ -1,8 +1,9 @@
 <?php
+//редактирование задачи
 global $db;
 
-require_once APP . '/helpers/hashtag_helpers.php';
 require_once CLASSES . "/Validator.php";
+require_once CORE . '/hashtag_helpers.php';
 
 $id = (int) ($_GET['id'] ?? 0);
 
@@ -11,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $sql = "SELECT * FROM tasks WHERE id = :id AND user_id = :user_id";
     $task = $db->query($sql, ['id' => $id, 'user_id' => $_SESSION['user_id']])->findOrAbort();
 
+    //получение хэштегов для задачи для загрузки в форму
     $hashtags = getTaskHashtags($db, $id);
     $hashtags_string = implode(', ', array_map(function ($tag) {
         return $tag['name'];
@@ -67,13 +69,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         return;
     }
 
-    $file_path = null;
-
     $sql = "SELECT file_ FROM tasks WHERE id = :id AND user_id = :user_id";
     $currentTask = $db->query($sql, ['id' => $id, 'user_id' => $_SESSION['user_id']])->find();
+    $file_path = $currentTask['file_'];
 
-    if ($file_path === null && isset($currentTask['file_'])) {
-        $file_path = $currentTask['file_'];
+    if (isset($_FILES['file_']) && $_FILES['file_']['error'] === UPLOAD_ERR_OK) {
+        $upload_dir = STORAGE . '/uploads/';
+        
+        if (!file_exists($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+        
+        $file_name = $_FILES['file_']['name'];
+        $file_tmp = $_FILES['file_']['tmp_name'];
+        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+        
+        $unique_file_name = uniqid() . '_' . $file_name;
+        $upload_path = $upload_dir . $unique_file_name;
+        
+        if (move_uploaded_file($file_tmp, $upload_path)) {
+            if (!empty($file_path) && file_exists(ROOT . '/' . $file_path)) {
+                unlink(ROOT . '/' . $file_path);
+            }
+            $file_path = 'storage/uploads/' . $unique_file_name;
+        } else {
+            $_SESSION['error'] = "Ошибка при загрузке файла";
+            redirect("tasks/update?id={$id}");
+            return;
+        }
     }
 
     try {
@@ -112,11 +135,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             }
 
             $_SESSION['success'] = "Задача успешно обновлена";
+            
         } else {
             throw new Exception("Failed to update task");
         }
 
-        redirect("../tasks/index");
+        redirect("../tasks?id={$id}");
     } catch (Exception $e) {
         $_SESSION['error'] = "Ошибка при обновлении задачи: " . $e->getMessage();
         redirect("tasks/update?id={$id}");

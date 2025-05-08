@@ -16,7 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //если форма отправл
         exit();
     } else { 
         $_SESSION['error'] = "Неверное имя пользователя или пароль";
-        redirect("login");
+        $_SESSION['old'] = [
+            'username' => $username
+        ];
+        redirect("/login");
         exit();
     }
 } else {

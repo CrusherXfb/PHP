@@ -7,9 +7,11 @@ $validation_errors = $_SESSION['validation_errors'] ?? [];
         <h1>Создать задачу</h1>
 
         <form method="POST" action="tasks/create" enctype="multipart/form-data">
+
             <div class="form-group">
                 <label for="title">Название:</label>
                 <input type="text" class="form-control <?= isset($validation_errors['title']) ? 'is-invalid' : '' ?>" id="title" name="title" value="<?= old('title') ?>" required>
+                
                 <?php if (isset($validation_errors['title'])): ?>
                     <div class="invalid-feedback d-block">
                         <ul class="list-unstyled">
@@ -20,10 +22,12 @@ $validation_errors = $_SESSION['validation_errors'] ?? [];
                     </div>
                 <?php endif; ?>
             </div>
+
             <div class="form-group">
                 <label for="description">Описание:</label>
                 <textarea class="form-control" id="description" name="description"><?= old('description') ?></textarea>
             </div>
+
             <div class="form-group">
                 <label>Приоритет:</label>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -37,6 +41,7 @@ $validation_errors = $_SESSION['validation_errors'] ?? [];
                         <input type="radio" name="priority" value="low" autocomplete="off" <?= old('priority') === 'low' ? 'checked' : '' ?>> Низкий
                     </label>
                 </div>
+               
                 <?php if (isset($validation_errors['priority'])): ?>
                     <div class="invalid-feedback d-block">
                         <ul class="list-unstyled">
@@ -47,6 +52,7 @@ $validation_errors = $_SESSION['validation_errors'] ?? [];
                     </div>
                 <?php endif; ?>
             </div>
+
             <div class="form-group">
                 <label for="due_date">Дата окончания:</label>
                 <input type="date" class="form-control" id="due_date" name="due_date" value="<?= old('due_date') ?>">

@@ -11,7 +11,8 @@
         <form method="post" action="login">
             <div class="form-group">
                 <label for="username">Имя пользователя:</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+                <input type="text" class="form-control" id="username" name="username" 
+                       value="<?= old('username') ?>" required>
             </div>
             <div class="form-group">
                 <label for="password">Пароль:</label>
@@ -23,4 +24,8 @@
     </div>
 </main>
 
-<?php require_once VIEWS . '/components/footer.php'; ?>
+<?php 
+// Очищаем данные сессии после отображения формы
+unset($_SESSION['old']);
+require_once VIEWS . '/components/footer.php'; 
+?>

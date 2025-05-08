@@ -1,6 +1,7 @@
 <?php
+//10 задач, у которых высокий приоритет и которые не выполнены
 $user_id = $_SESSION['user_id'];
-$high_priority_tasks = $db->query("SELECT * FROM tasks WHERE user_id = ? AND priority = 'high' ORDER BY due_date ASC LIMIT 10;", [$user_id])->findAll();
+$high_priority_tasks = $db->query("SELECT * FROM tasks WHERE user_id = ? AND priority = 'high' AND (completed = 0 OR completed IS NULL) ORDER BY due_date ASC LIMIT 10;", [$user_id])->findAll();
 $today = new DateTime();
 $two_days_later = $today->modify('+2 days')->format('Y-m-d');
 ?>
@@ -13,6 +14,7 @@ $two_days_later = $today->modify('+2 days')->format('Y-m-d');
             $due_date = $task['due_date'];
             $is_near_deadline = $due_date != null && $due_date <= $two_days_later;
             ?>
+            <!-- Если срок выполнения в ближайшие два дня или просрочен -->
             <li class="list-group-item <?= $is_near_deadline ? 'near-deadline' : '' ?>"
                 style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;"
                 onclick="window.location.href='tasks?id=<?= $task['id'] ?>'">
